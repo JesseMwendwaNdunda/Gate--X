@@ -24,8 +24,10 @@ function LoginForm() {
             const data = await res.json();
 
             if (res.ok && data.token) {
+              // Save token, role, and username
               localStorage.setItem("token", data.token);
               localStorage.setItem("role", data.role);
+              localStorage.setItem("username", values.username); // <-- store username
 
               // Redirect based on role
               if (data.role === "guard") navigate("/entry");
@@ -33,7 +35,7 @@ function LoginForm() {
 
               resetForm();
             } else {
-              alert(`❌ ${data.message || "Login failed"}`);
+              alert(`${data.message || "Login failed"}`);
             }
           } catch (err) {
             alert("Server error. Try again later.");
