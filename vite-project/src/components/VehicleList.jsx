@@ -123,7 +123,7 @@ function VehicleList() {
                 <td>{entry.owner_name}</td>
                 <td>{entry.phone_number}</td>
                 <td>{new Date(entry.entry_time).toLocaleString()}</td>
-                <td>{entry.exit_time ? new Date(entry.exit_time).toLocaleString() : "N/A"}</td>
+                <td>{entry.check_out_time ? new Date(entry.check_out_time).toLocaleString() : "N/A"}</td>
                 {role === "admin" && (
                   <td>
                     <button onClick={() => startEdit(entry)}>Edit</button>

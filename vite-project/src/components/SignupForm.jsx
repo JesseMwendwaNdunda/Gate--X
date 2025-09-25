@@ -21,10 +21,10 @@ function SignupForm() {
             });
             const data = await res.json();
             if (res.status === 201) {
-              alert('✅ User created successfully!');
+              alert('User created successfully!');
               resetForm();
             } else {
-              alert(`❌ ${data.message || 'Signup failed'}`);
+              alert(` ${data.message || 'Signup failed'}`);
             }
           } catch (err) {
             alert('Server error. Try again later.');

@@ -61,7 +61,7 @@ const GuardDashboard = () => {
           "Authorization": `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ exit_time: new Date().toISOString() }),
+        body: JSON.stringify({ check_out_time: new Date().toISOString() }),
       });
 
       if (!res.ok) {
