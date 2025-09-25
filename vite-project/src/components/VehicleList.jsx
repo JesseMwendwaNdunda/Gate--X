@@ -136,7 +136,7 @@ function VehicleList() {
         </table>
       )}
 
-      {/* Edit Modal */}
+      
       {editingEntry && (
         <div className="edit-modal">
           <h3>Edit Vehicle Entry</h3>

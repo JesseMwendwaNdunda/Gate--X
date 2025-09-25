@@ -24,7 +24,7 @@ function Navbar() {
         {role === "admin" && (
           <>
             <li><Link to="/vehicles">Vehicle Entries</Link></li>
-            <li><Link to="/offices">Offices</Link></li>
+            
             <li><Link to="/users">Users</Link></li>
           </>
         )}

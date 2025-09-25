@@ -3,7 +3,10 @@ import LoginForm from "./components/LoginForm";
 import SignupForm from "./components/SignupForm";
 import VehicleEntryForm from "./components/VehicleEntryForm";
 import VehicleList from "./components/VehicleList";
-import Navbar from "./components/Navbar"
+import Navbar from "./components/Navbar";
+import GuardDashboard from "./components/GuardDashboard";
+import AdminDashboard from "./components/AdminDashboard";
+import "./index.css";
 
 function App() {
   const PrivateRoute = ({ children, allowedRoles }) => {
@@ -13,37 +16,52 @@ function App() {
     return children;
   };
 
+  const DashboardRedirect = () => {
+    const role = localStorage.getItem("role");
+    if (role === "guard") return <Navigate to="/dashboard" replace />;
+    if (role === "admin") return <Navigate to="/admin-dashboard" replace />;
+    if (role === "office") return <Navigate to="/vehicles" replace />;
+    return <Navigate to="/login" replace />;
+  };
+
   return (
     <Router>
       <Navbar />
       <Routes>
-        <Route path="/" element={<LoginForm />} />
+        <Route path="/" element={<DashboardRedirect />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/signup" element={<SignupForm />} />
 
-        <Route
-          path="/entry"
-          element={
-            <PrivateRoute allowedRoles={["guard"]}>
-              <VehicleEntryForm />
-            </PrivateRoute>
-          }
-        />
+        {/* Guard routes */}
+        <Route path="/entry" element={
+          <PrivateRoute allowedRoles={["guard"]}>
+            <VehicleEntryForm />
+          </PrivateRoute>
+        }/>
+        <Route path="/dashboard" element={
+          <PrivateRoute allowedRoles={["guard"]}>
+            <GuardDashboard />
+          </PrivateRoute>
+        }/>
 
-        <Route
-          path="/vehicles"
-          element={
-            <PrivateRoute allowedRoles={["admin", "office"]}>
-              <VehicleList />
-            </PrivateRoute>
-          }
-        />
+        {/* Admin route */}
+        <Route path="/admin-dashboard" element={
+          <PrivateRoute allowedRoles={["admin"]}>
+            <AdminDashboard />
+          </PrivateRoute>
+        }/>
 
-        <Route path="*" element={<Navigate to="/login" replace />} />
+        {/* Office/admin vehicle list route */}
+        <Route path="/vehicles" element={
+          <PrivateRoute allowedRoles={["admin","office"]}>
+            <VehicleList />
+          </PrivateRoute>
+        }/>
+
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
   );
 }
 
 export default App;
-
