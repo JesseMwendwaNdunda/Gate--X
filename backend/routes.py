@@ -12,24 +12,21 @@ user_schema = UserSchema()
 app = Flask(__name__)
 api = Api(app)
 
-# --------------------------
 # Config
-# --------------------------
+
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///app.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["JWT_SECRET_KEY"] = "super-secret-key-123"
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 
-# --------------------------
 # Initialize extensions
-# --------------------------
+
 db.init_app(app)
 jwt = JWTManager(app)
 CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
 
-# --------------------------
 # Resources
-# --------------------------
+
 class VehicleEntryListResource(Resource):
     @jwt_required()
     def get(self):
@@ -115,17 +112,13 @@ class LoginResource(Resource):
             return {"token": access_token, "role": user.role, "username": user.username}, 200
         return {"message": "Invalid credentials"}, 401
 
-# --------------------------
-# Register API routes
-# --------------------------
+
 api.add_resource(SignupResource, "/api/signup")
 api.add_resource(LoginResource, "/api/login")
 api.add_resource(VehicleEntryListResource, "/api/vehicle_entries")
 api.add_resource(VehicleEntryResource, "/api/vehicle_entries/<int:entry_id>")
 
-# --------------------------
-# Create tables
-# --------------------------
+
 with app.app_context():
     db.create_all()
 
