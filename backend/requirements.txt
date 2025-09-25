@@ -27,3 +27,5 @@ typing_extensions==4.13.2
 virtualenv==20.33.0
 Werkzeug==3.0.6
 zipp==3.20.2
+psycopg2-binary==2.9.9
+gunicorn==21.2.0
