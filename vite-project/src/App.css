@@ -1,42 +1,211 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+/* 🌌 Global styling */
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  color: #fff;
+}
+
+/* 🌟 Container card */
+.container {
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  padding: 2rem 3rem;
+  margin-top: 4rem;
+  width: 400px;
   text-align: center;
+  animation: floatUp 0.8s ease forwards;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* ✨ Title */
+.container h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  
+  -webkit-text-fill-color: transparent;
 }
 
-@keyframes logo-spin {
+/* 📝 Form inputs */
+form label {
+  display: block;
+  text-align: left;
+  margin: 0.8rem 0 0.3rem;
+  font-weight: 500;
+}
+
+form input, 
+form select {
+  width: 100%;
+  padding: 0.7rem;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+form input:focus,
+form select:focus {
+  background: rgba(255, 255, 255, 0.35);
+  transform: scale(1.02);
+}
+
+/* 🚀 Buttons */
+button {
+  margin-top: 1rem;
+  width: 100%;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 114, 255, 0.5);
+}
+
+/* ❌ Error messages */
+.error {
+  color: #ff4b5c;
+  font-size: 0.85rem;
+  margin-top: -0.4rem;
+  margin-bottom: 0.5rem;
+}
+
+/* 📋 Vehicle List */
+.vehicle-list {
+  margin-top: 2rem;
+  width: 700px;
+  max-width: 95%;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 20px;
+  backdrop-filter: blur(15px);
+  animation: floatUp 0.8s ease forwards;
+}
+
+.vehicle-list h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.vehicle-card {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 1rem;
+  border-radius: 15px;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.vehicle-card:hover {
+  transform: scale(1.02);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.vehicle-card button {
+  width: auto;
+  padding: 0.4rem 1rem;
+  font-size: 0.9rem;
+  background: linear-gradient(90deg, #ff512f, #dd2476);
+}
+
+/* 🎬 Floating animation */
+@keyframes floatUp {
   from {
-    transform: rotate(0deg);
+    transform: translateY(30px);
+    opacity: 0;
   }
   to {
-    transform: rotate(360deg);
+    transform: translateY(0);
+    opacity: 1;
   }
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.vehicle-form-container {
+  max-width: 450px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #f0f4f8;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  font-family: Arial, sans-serif;
 }
 
-.card {
-  padding: 2em;
+h2 {
+  margin-bottom: 1.5rem;
+  color: #333;
 }
 
-.read-the-docs {
-  color: #888;
+.back-btn {
+  background: #f8f8f8;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+.vehicle-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-group {
+  position: relative;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.form-group input:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 5px rgba(79, 70, 229, 0.4);
+}
+
+.error {
+  color: #d32f2f;
+  font-size: 0.85rem;
+  margin-top: 0.2rem;
+}
+
+.submit-btn {
+  background: #4f46e5;
+  color: white;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+}
+
+.submit-btn:hover {
+  background: #4338ca;
 }
