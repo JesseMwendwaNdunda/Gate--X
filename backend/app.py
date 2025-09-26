@@ -12,7 +12,7 @@ load_dotenv()
 # --------------------------
 # Initialize Flask App
 # --------------------------
-app = Flask(__name__)
+app = Flask(__name__,static_url_path="/",static_folder="./vite-project/dist")
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///./gatex.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
@@ -37,6 +37,16 @@ user_schema = UserSchema()
 # --------------------------
 # Helpers
 # --------------------------
+
+@app.route("/")
+def index ():
+    return app.send_static_file("index.html")
+
+@app.errorhandler(404)
+def not_found (err):
+    return app.send_static_file("index.html")
+
+    
 def get_current_user():
     current_identity = get_jwt_identity()
     if not current_identity:
