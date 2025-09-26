@@ -10,7 +10,7 @@ from datetime import timedelta
 # Initialize Flask App
 # --------------------------
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///app.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///gatex.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["JWT_SECRET_KEY"] = "super-secret-key-123"
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
