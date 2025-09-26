@@ -17,6 +17,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///./gatex.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
 
+
 db.init_app(app)
 bcrypt.init_app(app)
 ma.init_app(app)
@@ -183,4 +184,4 @@ with app.app_context():
 # Run App
 # --------------------------
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
