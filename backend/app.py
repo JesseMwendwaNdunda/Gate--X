@@ -142,10 +142,15 @@ api.add_resource(LoginResource, "/api/login")
 api.add_resource(VehicleEntryListResource, "/api/vehicle_entries")
 api.add_resource(VehicleEntryResource, "/api/vehicle_entries/<int:entry_id>")
 
+# --------------------------
+# Create tables
+# --------------------------
 with app.app_context():
     db.create_all()
 
-
+# --------------------------
+# Handle preflight OPTIONS requests globally
+# --------------------------
 @app.before_request
 def handle_options():
     if request.method == "OPTIONS":
