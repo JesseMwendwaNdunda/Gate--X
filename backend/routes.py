@@ -4,11 +4,18 @@ from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity, creat
 from flask_cors import CORS
 from models import db, VehicleEntry, VehicleEntrySchema, UserSchema, User
 from datetime import timedelta
+import json
 
+# --------------------------
+# Schemas
+# --------------------------
 vehicle_entry_schema = VehicleEntrySchema()
 vehicle_entries_schema = VehicleEntrySchema(many=True)
 user_schema = UserSchema()
 
+# --------------------------
+# App Setup
+# --------------------------
 app = Flask(__name__)
 api = Api(app)
 
@@ -34,6 +41,9 @@ class VehicleEntryListResource(Resource):
     @jwt_required()
     def get(self):
         current_user = get_jwt_identity()
+        if isinstance(current_user, str):
+            current_user = json.loads(current_user)
+
         if current_user["role"] == "admin":
             entries = VehicleEntry.query.all()
         else:
@@ -43,6 +53,9 @@ class VehicleEntryListResource(Resource):
     @jwt_required()
     def post(self):
         current_user = get_jwt_identity()
+        if isinstance(current_user, str):
+            current_user = json.loads(current_user)
+
         data = request.get_json()
         new_entry = VehicleEntry(
             number_plate=data["number_plate"],
@@ -65,8 +78,11 @@ class VehicleEntryResource(Resource):
     @jwt_required()
     def put(self, entry_id):
         current_user = get_jwt_identity()
+        if isinstance(current_user, str):
+            current_user = json.loads(current_user)
         if current_user["role"] != "admin":
             return {"message": "Unauthorized - Admins only"}, 403
+
         entry = VehicleEntry.query.get_or_404(entry_id)
         data = request.get_json()
         for field in ["number_plate", "owner_name", "phone_number", "id_number", "office_id"]:
@@ -77,15 +93,16 @@ class VehicleEntryResource(Resource):
 
     @jwt_required()
     def patch(self, entry_id):
-        """Used for checkout (guard/admin)"""
         entry = VehicleEntry.query.get_or_404(entry_id)
-        entry.check_out_time = db.func.now()  # automatically set timestamp
+        entry.check_out_time = db.func.now()
         db.session.commit()
         return vehicle_entry_schema.dump(entry), 200
 
     @jwt_required()
     def delete(self, entry_id):
         current_user = get_jwt_identity()
+        if isinstance(current_user, str):
+            current_user = json.loads(current_user)
         if current_user["role"] != "admin":
             return {"message": "Unauthorized - Admins only"}, 403
         entry = VehicleEntry.query.get_or_404(entry_id)
@@ -107,13 +124,25 @@ class SignupResource(Resource):
 class LoginResource(Resource):
     def post(self):
         data = request.get_json()
-        user = User.query.filter_by(username=data["username"]).first()
-        if user and user.check_password(data["password"]):
-            access_token = create_access_token(
-                identity={"id": user.id, "role": user.role, "username": user.username}
-            )
-            return {"token": access_token, "role": user.role, "username": user.username}, 200
+        user = User.query.filter_by(username=data.get("username")).first()
+
+        if user and user.check_password(data.get("password")):
+            # JWT identity as a dict (Flask-JWT-Extended handles serialization)
+            access_token = create_access_token(identity={
+                "id": user.id,
+                "role": user.role,
+                "username": user.username
+            })
+
+            return {
+                "token": access_token,  # <-- THIS is your JWT token
+                "role": user.role,
+                "username": user.username
+            }, 200
+
         return {"message": "Invalid credentials"}, 401
+
+
 
 # --------------------------
 # Register API routes
@@ -129,6 +158,8 @@ api.add_resource(VehicleEntryResource, "/api/vehicle_entries/<int:entry_id>")
 with app.app_context():
     db.create_all()
 
-
+# --------------------------
+# Run App
+# --------------------------
 if __name__ == "__main__":
     app.run(debug=True)

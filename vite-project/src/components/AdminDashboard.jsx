@@ -9,13 +9,13 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchVehicles = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/vehicle_entries", { headers: { Authorization: `Bearer ${token}` } });
+        const res = await fetch("https://gate-x-3.onrender.com/api/vehicle_entries", { headers: { Authorization: `Bearer ${token}` } });
         if (!res.ok) throw new Error("Failed to fetch vehicles");
         setVehicles(await res.json()); setError("");
       } catch (err) { console.error(err); setError("Unable to load vehicle entries."); }
     };
     const fetchOffices = async () => {
-      try { const res = await fetch("http://localhost:5000/api/offices", { headers: { Authorization: `Bearer ${token}` } }); if (!res.ok) throw new Error(); setOffices(await res.json()); } catch (err) { console.error(err); }
+      try { const res = await fetch("https://gate-x-3.onrender.com/api/offices", { headers: { Authorization: `Bearer ${token}` } }); if (!res.ok) throw new Error(); setOffices(await res.json()); } catch (err) { console.error(err); }
     };
     fetchVehicles(); fetchOffices();
   }, []);
@@ -24,12 +24,12 @@ const AdminDashboard = () => {
   const handleEditChange = (e) => setEditData({ ...editData, [e.target.name]: e.target.value });
   const submitEdit = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/vehicle_entries/${editingEntry.id}`, { method: "PUT", headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` }, body: JSON.stringify({ ...editData, office_id: parseInt(editData.office_id) }) });
+      const res = await fetch(`https://gate-x-3.onrender.com/api/vehicle_entries/${editingEntry.id}`, { method: "PUT", headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` }, body: JSON.stringify({ ...editData, office_id: parseInt(editData.office_id) }) });
       if (!res.ok) throw new Error(await res.text());
       const updated = await res.json(); setVehicles(v => v.map(x => x.id === updated.id ? updated : x)); setEditingEntry(null);
     } catch (err) { console.error(err); alert("Error updating vehicle"); }
   };
-  const deleteEntry = async (id) => { try { const res = await fetch(`http://localhost:5000/api/vehicle_entries/${id}`, { method: "DELETE", headers: { Authorization: `Bearer ${token}` } }); if (!res.ok) throw new Error(); setVehicles(v => v.filter(x => x.id !== id)); } catch (err) { console.error(err); alert("Error deleting vehicle"); } };
+  const deleteEntry = async (id) => { try { const res = await fetch(`https://gate-x-3.onrender.com/api/vehicle_entries/${id}`, { method: "DELETE", headers: { Authorization: `Bearer ${token}` } }); if (!res.ok) throw new Error(); setVehicles(v => v.filter(x => x.id !== id)); } catch (err) { console.error(err); alert("Error deleting vehicle"); } };
 
   return (
     <div className="admin-dashboard" style={{ background: "#1e1b2d", color: "#fff", minHeight: "100vh", padding: "20px" }}>

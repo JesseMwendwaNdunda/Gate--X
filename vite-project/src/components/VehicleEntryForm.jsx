@@ -31,7 +31,7 @@ function VehicleEntryForm() {
         onSubmit={async (values, { resetForm }) => {
           try {
             const token = localStorage.getItem("token");
-            const res = await fetch("http://localhost:5000/api/vehicle_entries", {
+            const res = await fetch("https://gate-x-3.onrender.com/api/vehicle_entries", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -74,7 +74,6 @@ function VehicleEntryForm() {
               <ErrorMessage name="id_number" component="div" className="error" />
             </div>
 
-            
             <div className="form-group">
               <label htmlFor="office_id">Office</label>
               <Field as="select" name="office_id">

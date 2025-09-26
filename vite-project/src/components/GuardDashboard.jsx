@@ -19,7 +19,7 @@ const GuardDashboard = () => {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/api/vehicle_entries", {
+      const res = await fetch("https://gate-x-3.onrender.com/api/vehicle_entries", {
         headers: {
           "Authorization": `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -55,7 +55,7 @@ const GuardDashboard = () => {
     if (!token) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/vehicle_entries/${id}`, {
+      const res = await fetch(`https://gate-x-3.onrender.com/api/vehicle_entries/${id}`, {
         method: "PATCH",
         headers: {
           "Authorization": `Bearer ${token}`,
