@@ -5,14 +5,17 @@ from flask_migrate import Migrate
 from flask_restful import Api, Resource
 from models import db, bcrypt, ma, VehicleEntry, VehicleEntrySchema, UserSchema, User, Office
 from datetime import datetime
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
 # --------------------------
 # Initialize Flask App
 # --------------------------
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///./gatex.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["JWT_SECRET_KEY"] = "54524c30f406c0e194aaffc2102efd9a"
+app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
 
 db.init_app(app)
 bcrypt.init_app(app)
