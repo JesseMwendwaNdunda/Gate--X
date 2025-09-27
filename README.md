@@ -1,6 +1,10 @@
 # Gate--X
 A full-stack web application for managing vehicle entries and gate access, built with Flask backend API and a modern React frontend. This project demonstrates a real-world full-stack setup with RESTful APIs, JWT authentication, database migrations, and a frontend powered by modern tooling (React + Vite).
 
+The link to the live and running site is:https://gate-x-7.onrender.com
+Admin username: admin
+Admin password: admin123
+
 # Features
 ## Backend
 
