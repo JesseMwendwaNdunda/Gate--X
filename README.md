@@ -3,6 +3,8 @@ A full-stack web application for managing vehicle entries and gate access, built
 
 The link to the live and running site is:https://gate-x-7.onrender.com
 Admin username: admin
+
+
 Admin password: admin123
 
 # Features
