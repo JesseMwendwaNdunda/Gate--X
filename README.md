@@ -80,6 +80,8 @@ POST /api/vehicle_entries → Add new entry
 
 PUT /api/vehicle_entries/<id> → Update entry
 
+PATCH/api/vehcile_entries → Update entry as well
+
 DELETE /api/vehicle_entries/<id> → Delete entry
 
 ## Admin
